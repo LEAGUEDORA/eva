@@ -1,0 +1,53 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int data;
+    struct node *next;
+};
+typedef struct node node;
+struct node *top;
+void initi(){
+    top=NULL;
+}
+void push(int value){
+    node *temp;
+    temp = malloc(sizeof(node));
+    temp->data=value;
+    temp->next=top;
+    top=temp;
+}
+void pop(){
+    node *temp;
+    int n;
+    temp=top;
+    n=temp->data;
+    top=top->next;
+    free(temp);
+    printf("Deleted element is %d",n);
+    
+}
+int Top(){
+    return top->data;
+}
+void display(node *top){
+    if(top==NULL){
+        printf("Null");
+    }
+    else{
+        printf("%d ",top->data);
+        display(top->next);
+    }
+    
+}
+int main(){
+    initi();
+    push(10);
+    push(20);
+    push(30);
+    push(40);
+    push(50);
+    pop();
+    printf("\nTop elelmt is %d",Top());
+    printf("Elements are :");
+    display(top);
+}

@@ -1,0 +1,146 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node{
+    int data;
+    struct node *next;
+};
+struct node *head,*temp1,*tail;
+void insertbeg(){
+    struct node *newnode;
+    newnode = (struct node *)malloc(sizeof(struct node));
+    printf("Enter the data");
+    scanf("%d",&newnode->data);
+    if(head==NULL){
+        newnode->next = NULL;
+        head= newnode;
+    }
+    else{
+        newnode->next=head;
+        head=newnode;
+    }
+    printf("successfully inserted");
+}
+void insertend(){
+    struct node *newnode,*temp,*temp1;
+    newnode = (struct node *)malloc(sizeof(struct node));
+    printf("\nEnter the data");
+    scanf("%d",&newnode->data);
+    if(head==NULL){
+        newnode->next = NULL;
+        head = newnode;
+        printf("Succesfully inserted at the begin beacuse");
+    }
+    else{
+        temp=head;
+        while(temp->next!=NULL){
+            temp=temp->next;
+        }
+        temp->next=newnode;
+        newnode->next=NULL;
+        printf("Successfully inserted at the end");
+        
+    }
+}
+void insertpos(){
+    struct node *newnode,*temp;
+    newnode = (struct node *)malloc(sizeof(struct node));
+    printf("\nEnter position");
+    int pos;
+    scanf("%d",&pos);
+    printf("\nEnter the data");
+    scanf("%d",&newnode->data);
+    if(head==NULL){
+        newnode->next = NULL;
+        head = newnode;
+        printf("Succesfully inserted at the begin beacuse");
+    }
+    else{
+        int i=0;
+        temp=head;
+        while(i<pos-1){
+            temp=temp->next;
+            i++;
+        }
+        newnode->next=temp->next;
+        temp->next=newnode;
+    }
+    printf("Inserted at the pos");
+}
+void deletionbeg(){
+    struct node *temp;
+    if(head==NULL){
+        printf("Deletion not posible");
+    }
+    else{
+        temp=head;
+        head=head->next;
+        temp->next=NULL;
+    }
+}
+void deletionend(){
+    struct node *temp1,*temp;
+    temp1=head;
+    temp=head;
+    while(temp1->next!=NULL){
+        temp1=temp1->next;
+    }
+    tail=temp1;
+    while(temp->next!=tail){
+        temp=temp->next;
+    }
+    temp->next=NULL;
+    tail=temp;
+    
+}
+void deletionpos(){
+    struct node *temp,*temp1;
+    int i=0;
+    printf("\nEnter position");
+    int pos;
+    scanf("%d",&pos);
+    temp=head;
+    temp1=head;
+    int c=0;
+    while(temp1->next!=NULL){
+        temp1=temp1->next;
+        c++;
+    }
+    if(pos<=c){
+    while(i<pos-1){
+        temp=temp->next;
+        i++;
+    }
+    temp->next=temp->next->next;}
+    else{
+        printf("Elements are not present");
+    }
+}
+void display(){
+    temp1=head;
+    while(temp1!=NULL){
+        printf("%d  ",temp1->data);
+        temp1=temp1->next;
+    }
+}
+
+int main() {
+    insertbeg();
+    insertend();
+    insertpos();
+    insertpos();
+    display();
+    deletionbeg();
+    printf("\n beg");
+        display();
+
+    deletionend();
+        printf("\n end");
+
+        display();
+
+    deletionpos();
+        printf("\n pos");
+
+    display();
+    return 0;
+}
