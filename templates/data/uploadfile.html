@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+
+<html>
+    <title>
+        Neekenduku
+    </title>
+
+    <body>
+        <div  class="UploadForm">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Sumbit">
+
+        </form>
+    </div>
+    </body>
+</html>
