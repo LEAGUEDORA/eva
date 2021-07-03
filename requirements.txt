@@ -1,0 +1,4 @@
+django
+pillow
+pixelmatch
+html2image

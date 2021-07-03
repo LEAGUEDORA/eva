@@ -7,3 +7,6 @@ class LoginForm(forms.Form):
 
 class fileUpload(forms.Form):
     file_upload = forms.FileField()
+
+class FileRenderForm(forms.Form):
+    image_field = forms.ImageField()

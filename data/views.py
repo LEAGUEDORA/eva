@@ -1,3 +1,4 @@
+from django.http.response import FileResponse, HttpResponseRedirect
 from django.shortcuts import render
 import json
 from . models import users
@@ -5,6 +6,9 @@ from django.http import JsonResponse
 import os
 import datetime
 from . forms import LoginForm, fileUpload
+from html2image import Html2Image
+from copy import copy
+from image_diff import ImageDiffClass
 
 def handle_file_form(f, file_name):
     try:
@@ -57,10 +61,27 @@ def UploadFile(request):
         form = fileUpload(request.POST, request.FILES)
         if form.is_valid():
             name = request.FILES['file_upload'].name
+            if not  name.endswith("html"):
+                return JsonResponse({"request":"Please upload files with .html extensions"})
             if handle_file_form(request.FILES['file_upload'], name):
-                return JsonResponse({"request":True})
+                image_name = copy(name).replace('html', 'jpg')
+                htl = Html2Image(output_path = os.path.join("Files"))
+                htl.screenshot(html_file = os.path.join('Files', name), save_as =  image_name)
+                return HttpResponseRedirect(f'/data/renderimage/{image_name}')
             return JsonResponse({"request":False})
-            
     else:
         form = fileUpload()
     return render(request, 'uploadfile.html', {'form':form})
+
+
+def renderImage(request, file_name):
+    if request.method == "POST":
+        instance_of_imagediff = ImageDiffClass(directory = "Files", file1 = "index.jpg", file2 = file_name)
+        saved_file_name = instance_of_imagediff.getDifferenceInImage()
+        return render(request, 'render_image.html', {'form' : {'image_field' : "/data/getimage/" + saved_file_name}})
+    # else:
+    return render(request, 'render_image.html', {'form' : {'image_field' : "/data/getimage/" +file_name}})
+
+def sendImage(request, file_name):
+    file_ = open(os.path.join("Files", file_name), 'rb')
+    return FileResponse(file_)

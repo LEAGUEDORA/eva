@@ -1,0 +1,14 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <title>image upload example</title> 
+</head> 
+<body> 
+    <form method = "post" enctype="multipart/form-data"> 
+        {% csrf_token %} 
+        <img src="{{form.image_field}}" alt="">
+        <button type="submit">Check</button>
+        <button>  <a href="/data/home">Re-Upload</a>  </button>
+</body> 
+</html> 
