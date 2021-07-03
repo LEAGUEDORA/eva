@@ -65,7 +65,7 @@ def UploadFile(request):
                 return JsonResponse({"request":"Please upload files with .html extensions"})
             if handle_file_form(request.FILES['file_upload'], name):
                 image_name = copy(name).replace('html', 'jpg')
-                htl = Html2Image(output_path = os.path.join("Files"))
+                htl = Html2Image(output_path = os.path.join("Files"), custom_flags = ['--no-sandbox'])
                 htl.screenshot(html_file = os.path.join('Files', name), save_as =  image_name)
                 return HttpResponseRedirect(f'/data/renderimage/{image_name}')
             return JsonResponse({"request":False})
